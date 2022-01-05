@@ -10,7 +10,7 @@ class Calculator {
         this.operation = undefined
     }
     delete(){
-
+        this.currentOperand = this.currentOperand.toString().slice(0,-1);
     }
     appendNumber(number){
         if(number === '.' && this.currentOperand.includes('.')){
@@ -43,13 +43,13 @@ class Calculator {
                 computation = prev + current;
                 break;
             case '-' :
-                computation = prev + current;
+                computation = prev - current;
                 break;
             case '*':
-                computation = prev + current;
+                computation = prev * current;
                 break;
             case '/':
-                computation = prev + current;
+                computation = prev / current;
                 break;
             default:
                 return;
@@ -60,7 +60,12 @@ class Calculator {
     }
     updateDisplay(){
         this.currentOperandTextElement.innerText = this.currentOperand;
+        /*if (this.operation != null){    //Makes it so the operation sign follows the previous number
+            this.previousOperandTextElement.innerText = 
+            `${this.previousOperand } ${ this.operation}`
+        }*/
         this.previousOperandTextElement.innerText = this.previousOperand;
+        
     }
 }
 
@@ -101,5 +106,10 @@ equalsButton.addEventListener('click', button => {
 
 allClearButton.addEventListener('click', button => {
     calculator.clear();
+    calculator.updateDisplay();
+})
+
+deleteButton.addEventListener('click', button => {
+    calculator.delete();
     calculator.updateDisplay();
 })
